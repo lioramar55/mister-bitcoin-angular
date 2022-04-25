@@ -1,37 +1,38 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, tap } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BitcoinService {
-  constructor(private http: HttpClient) {}
+  cache!: any;
+  constructor(private http: HttpClient) {
+    this.cache = localStorage.getItem('cache');
+    this.cache = this.cache ? JSON.parse(this.cache) : {};
+  }
 
-  //  cacheKey = 'caching'
-  //  cache = localStorage.getItem(this.cacheKey)
-  // this.cache = this.cache ? JSON.parse(this.cache) : {}
-
-  getRate(balance: number) {
-    // if (cache[balance]) {
-    //   console.log('return from cache for balance ', balance)
-    //   return cache[balance]
-    // }
+  async getRate(balance: number): Promise<number> {
+    if (this.cache && this.cache[balance]) {
+      console.log('return from cache for balance ', balance);
+      return this.cache[balance];
+    }
     const url = `https://blockchain.info/tobtc?currency=USD&value=${balance}`;
-    return this.http.get<number>(url);
-    // cache[balance] = res.data;
-    // localStorage.setItem(cacheKey, JSON.stringify(cache));
+    const rate = await lastValueFrom(this.http.get<number>(url));
+    this.cache[balance] = rate;
+    localStorage.setItem('cache', JSON.stringify(this.cache));
+    return rate;
   }
 
   async getMarketPrice(timeSpan = '6months') {
-    // if (cache[timeSpan]) {
-    //   console.log(
-    //     'returning from cache data about bitcoin for timespan of ' + timeSpan
-    //   );
-    //   return cache[timeSpan];
-    // }
+    if (this.cache[timeSpan]) {
+      console.log(
+        'returning from cache data about bitcoin for timespan of ' + timeSpan
+      );
+      return this.cache[timeSpan];
+    }
     const url = `https://api.blockchain.info/charts/market-price?timespan=${timeSpan}&format=json&cors=true`;
-    return this.http.get<number>(url);
+    return this.http.get(url);
   }
 
   async getConfirmedTransactions() {}

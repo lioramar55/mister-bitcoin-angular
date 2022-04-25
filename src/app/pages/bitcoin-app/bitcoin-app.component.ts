@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { lastValueFrom } from 'rxjs';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { BitcoinService } from '../../services/bitcoin.service';
@@ -15,11 +16,10 @@ export class BitcoinAppComponent implements OnInit {
     private userService: UserService
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.user = this.userService.loggedInUser;
-    this.bitcoinService
-      .getRate(this.user.balance)
-      .subscribe((res): void => this.setRate(res));
+    const rate = await this.bitcoinService.getRate(this.user.balance);
+    this.setRate(rate);
   }
 
   setRate(rate: number) {
