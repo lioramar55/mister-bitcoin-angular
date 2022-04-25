@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { lastValueFrom } from 'rxjs';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { BitcoinService } from '../../services/bitcoin.service';

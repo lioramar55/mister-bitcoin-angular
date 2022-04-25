@@ -2,7 +2,7 @@
   <div class="header">
     <h1>Contact List</h1>
     <contact-filter (onSetFilter)="setFilter($event)"></contact-filter>
-    <a class="simple-button" href="/contact/edit"> Add Contact </a>
+    <a class="simple-button" routerLink="/contact/edit"> Add Contact </a>
   </div>
   <ul class="contacts simple-cards-grid">
     <li *ngFor="let contact of contacts | async; index as idx">

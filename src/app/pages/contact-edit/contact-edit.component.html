@@ -1,0 +1,19 @@
+<div class="edit-contact">
+  <h2>{{ contact._id ? "Edit" : "Add" }} Contact</h2>
+  <h2>Contact</h2>
+  <form [formGroup]="form">
+    <label>
+      Name:
+      <input type="text" formControlName="name" required />
+    </label>
+    <label>
+      Email:
+      <input type="email" formControlName="email" required />
+    </label>
+    <label>
+      Phone:
+      <input type="tel" formControlName="phone" required />
+    </label>
+    <button>Save</button>
+  </form>
+</div>
