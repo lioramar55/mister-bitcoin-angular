@@ -6,7 +6,7 @@
   </div>
   <ul class="contacts simple-cards-grid">
     <li *ngFor="let contact of contacts | async; index as idx">
-      <a href="/contact/{{ contact._id }}">
+      <a routerLink="/contact/{{ contact._id }}">
         <contact-preview [contact]="contact"></contact-preview>
       </a>
       <button (click)="onRemoveContact(contact._id)">X</button>

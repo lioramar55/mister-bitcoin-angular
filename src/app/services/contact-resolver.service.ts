@@ -11,7 +11,7 @@ export class ContactResolverService {
   async resolve(route: ActivatedRouteSnapshot) {
     const { id } = route.params;
     if (!id) return null;
-    const pet = await lastValueFrom(this.contactService.getContactById(id));
-    return pet;
+    const contact = await lastValueFrom(this.contactService.getContactById(id));
+    return contact;
   }
 }

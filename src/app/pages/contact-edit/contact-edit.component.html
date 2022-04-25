@@ -1,7 +1,7 @@
 <div class="edit-contact">
   <h2>{{ contact._id ? "Edit" : "Add" }} Contact</h2>
   <h2>Contact</h2>
-  <form [formGroup]="form">
+  <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
     <label>
       Name:
       <input type="text" formControlName="name" required />
@@ -14,6 +14,6 @@
       Phone:
       <input type="tel" formControlName="phone" required />
     </label>
-    <button>Save</button>
+    <button [disabled]="form.invalid">Save</button>
   </form>
 </div>

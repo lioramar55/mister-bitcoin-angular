@@ -4,6 +4,12 @@ export interface Contact {
   email: string;
   phone: string;
 }
+export interface NewContact {
+  _id?: string;
+  name: string;
+  email: string;
+  phone: string;
+}
 
 export interface contactFilter {
   term: string;

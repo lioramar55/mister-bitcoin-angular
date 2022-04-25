@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BitcoinAppComponent } from './pages/bitcoin-app/bitcoin-app.component';
+import { ContactDetailsComponent } from './pages/contact-details/contact-details.component';
 import { ContactEditComponent } from './pages/contact-edit/contact-edit.component';
 import { ContactListComponent } from './pages/contact-list/contact-list.component';
 
@@ -14,12 +15,17 @@ const routes: Routes = [
   {
     path: 'contact/edit',
     component: ContactEditComponent,
-    resolve: { pet: ContactResolverService },
+    resolve: { contact: ContactResolverService },
   },
   {
     path: 'contact/edit/:id',
     component: ContactEditComponent,
-    resolve: { pet: ContactResolverService },
+    resolve: { contact: ContactResolverService },
+  },
+  {
+    path: 'contact/:id',
+    component: ContactDetailsComponent,
+    resolve: { contact: ContactResolverService },
   },
 ];
 

@@ -6,7 +6,11 @@ import {
   throwError,
   lastValueFrom,
 } from 'rxjs';
-import { Contact, contactFilter } from 'src/app/models/contact.model';
+import {
+  Contact,
+  NewContact,
+  contactFilter,
+} from 'src/app/models/contact.model';
 
 const CONTACTS = [
   {
@@ -178,6 +182,18 @@ export class ContactService {
       : this._addContact(contact);
   }
 
+  private _addContact(contact: Contact) {
+    //mock the server work
+    const newContact: NewContact = this.getNewContact(
+      contact.name,
+      contact.email,
+      contact.phone
+    );
+    newContact._id = this.makeId();
+    this._contactsDb.push(<Contact>newContact);
+    this._contacts$.next(this._sort(this._contactsDb));
+  }
+
   private _updateContact(contact: Contact) {
     //mock the server work
     this._contactsDb = this._contactsDb.map((c) =>
@@ -187,25 +203,14 @@ export class ContactService {
     this._contacts$.next(this._sort(this._contactsDb));
   }
 
-  public getNewContact(name = '', email = '', phone = ''): Contact {
+  public getNewContact(name = '', email = '', phone = '') {
     return {
       name,
       email,
       phone,
-      _id: this.makeId(),
     };
   }
 
-  private _addContact(contact: Contact) {
-    //mock the server work
-    const newContact: Contact = this.getNewContact(
-      contact.name,
-      contact.email,
-      contact.phone
-    );
-    this._contactsDb.push(newContact);
-    this._contacts$.next(this._sort(this._contactsDb));
-  }
   makeId = (length: number = 8): string => {
     var result: string = '';
     var characters: string =
