@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject, of, throwError } from 'rxjs';
+import {
+  Observable,
+  BehaviorSubject,
+  of,
+  throwError,
+  lastValueFrom,
+} from 'rxjs';
 import { Contact, contactFilter } from 'src/app/models/contact.model';
 
 const CONTACTS = [
@@ -130,15 +136,22 @@ export class ContactService {
   private _contacts$ = new BehaviorSubject<Contact[]>([]);
   public contacts$ = this._contacts$.asObservable();
 
-  private _filterBy$ = new BehaviorSubject<contactFilter>({ term: '' });
-  public filterBy$ = this._filterBy$.asObservable();
+  // private _filterBy$ = new BehaviorSubject<contactFilter>({ term: '' });
+  // public filterBy$ = this._filterBy$.asObservable();
+  public filterBy = { term: '' };
   constructor() {}
 
-  public loadContacts(): void {
+  public async loadContacts(): Promise<void> {
     let contacts = this._contactsDb;
-    // const filterBy = this.filterBy$;
-    // contacts = this._filter(contacts, filterBy.term);
+    // const filterBy = await lastValueFrom(this.filterBy$);
+    contacts = this._filter(contacts, this.filterBy.term);
     this._contacts$.next(this._sort(contacts));
+  }
+
+  public setFilter(filterBy: contactFilter) {
+    // this._filterBy$.next(filterBy);
+    this.filterBy = filterBy;
+    this.loadContacts();
   }
 
   public getContactById(id: string): Observable<Contact> {
@@ -193,7 +206,6 @@ export class ContactService {
     this._contactsDb.push(newContact);
     this._contacts$.next(this._sort(this._contactsDb));
   }
-
   makeId = (length: number = 8): string => {
     var result: string = '';
     var characters: string =
@@ -204,7 +216,6 @@ export class ContactService {
     }
     return result;
   };
-
   private _sort(contacts: Contact[]): Contact[] {
     return contacts.sort((a, b) => {
       if (a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase()) {

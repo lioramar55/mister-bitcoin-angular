@@ -1,1 +1,15 @@
-<p>contact-list works!</p>
+<div class="contact-list">
+  <div class="header">
+    <h1>Contact List</h1>
+    <contact-filter (onSetFilter)="setFilter($event)"></contact-filter>
+    <a class="simple-button" href="/contact/edit"> Add Contact </a>
+  </div>
+  <ul class="contacts simple-cards-grid">
+    <li *ngFor="let contact of contacts | async; index as idx">
+      <a href="/contact/{{ contact._id }}">
+        <contact-preview [contact]="contact"></contact-preview>
+      </a>
+      <button (click)="onRemoveContact(contact._id)">X</button>
+    </li>
+  </ul>
+</div>

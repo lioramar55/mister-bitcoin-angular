@@ -1,0 +1,22 @@
+.edit-contact {
+  h2 {
+    text-align: center;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 500px;
+    margin: 0 auto;
+    gap: 0.5rem;
+    label {
+      display: flex;
+      flex-direction: column;
+      width: 75%;
+    }
+    button {
+      width: 75%;
+    }
+  }
+}

@@ -1,1 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
+// Externals
+
+// Setup
+@import "./app/scss/setup/variables";
+@import "./app/scss/setup/functions";
+@import "./app/scss/setup/mixins";
+
+// Basics
+@import "./app/scss/basics/typography";
+@import "./app/scss/basics/base";
+@import "./app/scss/basics/helpers";
+@import "./app/scss/basics/layout";
+@import "./app/scss/basics/modals";
+@import "./app/scss/basics/animations";
+
+// Pages
+@import "./app/scss/pages/home-page";
+@import "./app/scss/pages/contact-list";
+@import "./app/scss/pages/contact-details";
+@import "./app/scss/pages/edit-contact";
+
+// Components
+@import "./app/scss/cmps/contact-preview";
+@import "./app/scss/cmps/app-header";
+@import "./app/scss/cmps/move-list";
+
+.app {
+  // display: flex;
+  // flex-direction: column;
+  min-height: 100vh;
+  .container {
+    flex-grow: 1;
+  }
+  // justify-content: space-between;
+  footer {
+    margin-top: auto;
+    text-align: center;
+    padding: 1rem;
+    background-color: $clr1;
+    color: $clr5;
+  }
+}
